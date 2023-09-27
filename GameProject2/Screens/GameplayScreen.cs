@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using static System.TimeZoneInfo;
+using System.Reflection.Metadata;
 
 namespace GameProject2.Screens
 {
@@ -57,6 +58,8 @@ namespace GameProject2.Screens
             // timing mechanism that we have just finished a very long frame, and that
             // it should not try to catch up.
             ScreenManager.Game.ResetElapsedTime();
+
+            _mc.LoadContent(_content);
         }
 
 
