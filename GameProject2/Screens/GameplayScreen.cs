@@ -23,6 +23,8 @@ namespace GameProject2.Screens
         private SpriteFont _gameFont;
 
         private mcSprite _mc = new mcSprite();
+
+        private Texture2D _level;
         
         //private Vector2 _enemyPosition = new Vector2(100, 100);
 
@@ -48,6 +50,7 @@ namespace GameProject2.Screens
                 _content = new ContentManager(ScreenManager.Game.Services, "Content");
 
             _gameFont = _content.Load<SpriteFont>("gamefont");
+            _level = _content.Load<Texture2D>("level");
 
             // A real game would probably have more content than this sample, so
             // it would take longer to load. We simulate that by delaying for a
@@ -172,6 +175,7 @@ namespace GameProject2.Screens
             //spriteBatch.DrawString(_gameFont, "// TODO", _playerPosition, Color.Green);
             spriteBatch.DrawString(_gameFont, "Insert Gameplay Here",
                                    new Vector2(100, 100), Color.DarkRed);
+            spriteBatch.Draw(_level, new Vector2(0, 0), null, Color.White, 0f, new Vector2(0, 0), 1.5f, SpriteEffects.None, 0f);
 
             _mc.Draw(gameTime, spriteBatch);
 
