@@ -1,6 +1,13 @@
 ﻿﻿﻿Content/Coins.png - created by puddin of OpenGameArt.org (https://opengameart.org/content/rotating-coin) and released under the public domain
 
 
+gradient.png, blank.png, and background.png are from the MonoGame port of the XNA Game State Management Sample, available at:
+
+https://github.com/tomizechsterson/game-state-management-monogame
+
+and relased under the MIT License
+
+
 Content/Pickup_Coin15.wav - created by Nathan Bean with BXFR, released under public domain
 
 
