@@ -29,10 +29,13 @@ namespace GameProject2
 
         private Vector2 _position = new Vector2(200, 300);
 
+
         KeyboardState currentKeyboardState;
         KeyboardState priorKeyboardState;
 
         private BoundingRectangle _bounds = new BoundingRectangle(new Vector2(200 - 32, 300 - 32), 48, 130);
+
+        private Vector2 gravity;
 
         private double _animationTimer;
 
@@ -40,9 +43,17 @@ namespace GameProject2
 
         private bool _flipped;
 
+        //private double _jumpTimer;
 
         public Action action;
 
+        private Vector2 direction;
+
+        public int coinsCollected;
+
+
+        public Vector2 Position => _position;
+        
         /// <summary>
         /// Boundaries for the bounding rectangle of the sprite
         /// </summary>
@@ -66,22 +77,32 @@ namespace GameProject2
         /// <param name="gameTime">The real time elapsed in the game</param>
         public void Update(GameTime gameTime)
         {
+            direction = new Vector2(200 * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
+            gravity = new Vector2(0, 10 * (float)gameTime.ElapsedGameTime.TotalSeconds);
             priorKeyboardState = currentKeyboardState;
             currentKeyboardState = Keyboard.GetState();
+            if (_position.Y < 0)
+            {
+                _position += gravity;
+            }
 
 
-
+            for(int i = 0; i < coinsCollected; i++)
+            {
+                direction += new Vector2(0.75f, 0);
+                if (direction.X > 300) direction.X = 300;
+            }
             if (currentKeyboardState.IsKeyDown(Keys.A) ||
                 currentKeyboardState.IsKeyDown(Keys.Left))
             {
-                _position += new Vector2(-200 * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
+                _position += -direction;
                 action = Action.Running;
                 _flipped = true;
             }
             if (currentKeyboardState.IsKeyDown(Keys.D) ||
                 currentKeyboardState.IsKeyDown(Keys.Right))
             {
-                _position += new Vector2(200 * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
+                _position += direction;
                 action = Action.Running;
                 _flipped = false;
             }
@@ -93,8 +114,27 @@ namespace GameProject2
             {
                 action = Action.Idle;
             }
+
+            //Jump Function. May work on Later
+            //if(currentKeyboardState.IsKeyDown(Keys.Space))
+            //{
+            //    _position += new Vector2(0, -250 * (float)gameTime.ElapsedGameTime.TotalSeconds);
+            //    _jumpTimer += gameTime.ElapsedGameTime.TotalSeconds;
+            //    if (_jumpTimer > 1)
+            //    {
+                     
+            //        if (_position.Y > 300)
+            //        {
+            //            _position += gravity;
+            //        }
+                    
+            //        _jumpTimer = 0;
+
+                    
+            //    }
+            //}
             if (_position.X < 0) _position.X = 0;
-            if (_position.X > 720) _position.X = 720;
+            if (_position.X > 1150) _position.X = 1150;
 
             _bounds.X = _position.X;
             _bounds.Y = _position.Y;

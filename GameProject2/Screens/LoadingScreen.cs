@@ -1,11 +1,13 @@
-﻿using GameProject2.StateManagement;
-using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static System.TimeZoneInfo;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using GameProject2.StateManagement;
 
 namespace GameProject2.Screens
 {
@@ -23,9 +25,14 @@ namespace GameProject2.Screens
     //   screen will be the only thing displayed while this load is taking place.
     public class LoadingScreen : GameScreen
     {
+        private ContentManager _content;
+        private Texture2D _backgroundTexture;
+
         private readonly bool _loadingIsSlow;
         private bool _otherScreensAreGone;
         private readonly GameScreen[] _screensToLoad;
+
+
 
         // Constructor is private: loading screens should be activated via the static Load method instead.
         private LoadingScreen(ScreenManager screenManager, bool loadingIsSlow, GameScreen[] screensToLoad)
@@ -34,6 +41,8 @@ namespace GameProject2.Screens
             _screensToLoad = screensToLoad;
 
             TransitionOnTime = TimeSpan.FromSeconds(0.5);
+
+            _backgroundTexture = _content.Load<Texture2D>("gameproject2loadingscreen");
         }
 
         // Activates the loading screen.
@@ -48,6 +57,7 @@ namespace GameProject2.Screens
             var loadingScreen = new LoadingScreen(screenManager, loadingIsSlow, screensToLoad);
 
             screenManager.AddScreen(loadingScreen, controllingPlayer);
+
         }
 
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
@@ -93,6 +103,9 @@ namespace GameProject2.Screens
             {
                 var spriteBatch = ScreenManager.SpriteBatch;
                 var font = ScreenManager.Font;
+
+                spriteBatch.Draw(_backgroundTexture, new Vector2(0,0),
+                new Color(TransitionAlpha, TransitionAlpha, TransitionAlpha));
 
                 const string message = "Loading...";
 

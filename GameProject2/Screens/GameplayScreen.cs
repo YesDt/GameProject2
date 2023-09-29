@@ -11,21 +11,31 @@ using System.Threading;
 using System.Threading.Tasks;
 using static System.TimeZoneInfo;
 using System.Reflection.Metadata;
+using SharpDX.Direct2D1;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
 
 namespace GameProject2.Screens
 {
-    // This screen implements the actual game logic. It is just a
-    // placeholder to get the idea across: you'll probably want to
-    // put some more interesting gameplay in here!
+    // This screen implements the actual game logic.
     public class GameplayScreen : GameScreen
     {
         private ContentManager _content;
         private SpriteFont _gameFont;
 
         private mcSprite _mc = new mcSprite();
+        private CoinSprite[] _coins;
 
         private Texture2D _level;
-        
+
+        private int _coinsLeft;
+
+        private Song _backgroundMusic;
+        private SoundEffect _coinPickup;
+
+        private bool _noCoinsLeft { get; set; } = false;
+
+
         //private Vector2 _enemyPosition = new Vector2(100, 100);
 
         private readonly Random _random = new Random();
@@ -63,6 +73,25 @@ namespace GameProject2.Screens
             ScreenManager.Game.ResetElapsedTime();
 
             _mc.LoadContent(_content);
+            _coins = new CoinSprite[]
+            {
+                new CoinSprite(new Vector2(300, 300)),
+                new CoinSprite(new Vector2(700, 300)),
+                new CoinSprite(new Vector2(5, 300)),
+                new CoinSprite(new Vector2(100, 300)),
+                new CoinSprite(new Vector2(543, 300)),
+                new CoinSprite(new Vector2(723, 300)),
+                new CoinSprite(new Vector2(400, 300)),
+                new CoinSprite(new Vector2(1000, 300)),
+                new CoinSprite(new Vector2(1100, 300)),
+                new CoinSprite(new Vector2(392, 300))
+            };
+            _coinsLeft = _coins.Length;
+            foreach (var coin in _coins) coin.LoadContent(_content);
+            _coinPickup = _content.Load<SoundEffect>("Pickup_Coin15");
+            _backgroundMusic = _content.Load<Song>("Project2music");
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(_backgroundMusic);
         }
 
 
@@ -100,6 +129,26 @@ namespace GameProject2.Screens
                 var targetPosition = new Vector2(
                     ScreenManager.GraphicsDevice.Viewport.Width / 2 - _gameFont.MeasureString("Insert Gameplay Here").X / 2,
                     200);
+                foreach (var coin in _coins)
+                {
+                    if (!coin.Collected && coin.Bounds.CollidesWith(_mc.Bounds))
+                    {
+                        coin.Collected = true;
+                        _coinPickup.Play();
+                        _coinsLeft--;
+                        _mc.coinsCollected++;
+                    }
+
+                }
+                if (_coinsLeft == 0)
+                {
+                    _noCoinsLeft = true;
+                }
+                if (_noCoinsLeft)
+                {
+                    MediaPlayer.Stop();
+                    LoadingScreen.Load(ScreenManager, false, null, new MaintainenceScreen());
+                }
 
                 //_enemyPosition = Vector2.Lerp(_enemyPosition, targetPosition, 0.05f);
 
@@ -129,10 +178,12 @@ namespace GameProject2.Screens
             PlayerIndex player;
             if (_pauseAction.Occurred(input, ControllingPlayer, out player) || gamePadDisconnected)
             {
+                MediaPlayer.Pause();
                 ScreenManager.AddScreen(new PauseMenuScreen(), ControllingPlayer);
             }
             else
             {
+                MediaPlayer.Resume();
 
                 _mc.Update(gameTime);
                 // Otherwise move the player position.
@@ -164,19 +215,27 @@ namespace GameProject2.Screens
 
         public override void Draw(GameTime gameTime)
         {
+            float playerX = MathHelper.Clamp(_mc.Position.X, 300, 700);
+            float offset = 300 - playerX;
+
+
+            Matrix transform;
             // This game has a blue background. Why? Because!
             ScreenManager.GraphicsDevice.Clear(ClearOptions.Target, Color.CornflowerBlue, 0, 0);
 
-            // Our player and enemy are both actually just text strings.
             var spriteBatch = ScreenManager.SpriteBatch;
 
-            spriteBatch.Begin();
+            transform = Matrix.CreateTranslation(offset, 0, 0);
+            spriteBatch.Begin(transformMatrix: transform);
 
-            //spriteBatch.DrawString(_gameFont, "// TODO", _playerPosition, Color.Green);
-            spriteBatch.DrawString(_gameFont, "Insert Gameplay Here",
-                                   new Vector2(100, 100), Color.DarkRed);
+
             spriteBatch.Draw(_level, new Vector2(0, 0), null, Color.White, 0f, new Vector2(0, 0), 1.5f, SpriteEffects.None, 0f);
+            foreach (var coin in _coins)
+            {
+                coin.Draw(gameTime, spriteBatch);
 
+
+            }
             _mc.Draw(gameTime, spriteBatch);
 
             spriteBatch.End();
