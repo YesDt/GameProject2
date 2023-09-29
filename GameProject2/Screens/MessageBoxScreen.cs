@@ -26,8 +26,8 @@ namespace GameProject2.Screens
         // "A=ok, B=cancel" usage text prompt.
         public MessageBoxScreen(string message, bool includeUsageText = true)
         {
-            const string usageText = "\nA button, Space, Enter = ok" +
-                                     "\nB button, Backspace = cancel";
+            const string usageText = "\nSpace, Enter = ok" +
+                                     "\nBackspace = cancel";
 
             if (includeUsageText)
                 _message = message + usageText;
@@ -40,10 +40,10 @@ namespace GameProject2.Screens
             TransitionOffTime = TimeSpan.FromSeconds(0.2);
 
             _menuSelect = new InputAction(
-                new[] { Buttons.A, Buttons.Start },
+                new[] { Buttons.Start },
                 new[] { Keys.Enter, Keys.Space }, true);
             _menuCancel = new InputAction(
-                new[] { Buttons.B, Buttons.Back },
+                new[] { Buttons.Back },
                 new[] { Keys.Back, Keys.Escape }, true);
         }
 

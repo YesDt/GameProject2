@@ -18,6 +18,7 @@ namespace GameProject2
     {
         Idle = 0,
         Running = 1,
+        Jumping = 2,
     }
 
     /// <summary>
@@ -81,7 +82,6 @@ namespace GameProject2
             gravity = new Vector2(0, 200 * (float)gameTime.ElapsedGameTime.TotalSeconds);
             priorKeyboardState = currentKeyboardState;
             currentKeyboardState = Keyboard.GetState();
-            //if (!(_offGround)) _position.Y = 300;
             if (_position.Y < 300)
             {
                 _offGround = true;
@@ -116,7 +116,7 @@ namespace GameProject2
             if (!(currentKeyboardState.IsKeyDown(Keys.A) ||
                 currentKeyboardState.IsKeyDown(Keys.Left)) &&
                 !(currentKeyboardState.IsKeyDown(Keys.D) ||
-                currentKeyboardState.IsKeyDown(Keys.Right))
+                currentKeyboardState.IsKeyDown(Keys.Right)) 
                 )
             {
                 action = Action.Idle;
@@ -125,7 +125,7 @@ namespace GameProject2
             //Jump Function. May work on Later
             if(_offGround)
             {
-
+                action = Action.Jumping;
                 _position += gravity;
  
             }
