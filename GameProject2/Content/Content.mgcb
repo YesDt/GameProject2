@@ -49,6 +49,13 @@
 /processorParam:TextureFormat=Color
 /build:coins.png
 
+#begin CoinsLeft.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:CoinsLeft.spritefont
+
 #begin gameFont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor

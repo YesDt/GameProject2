@@ -43,7 +43,7 @@ namespace GameProject2
 
         private bool _flipped;
 
-        //private double _jumpTimer;
+        private bool _offGround = false;
 
         public Action action;
 
@@ -78,13 +78,20 @@ namespace GameProject2
         public void Update(GameTime gameTime)
         {
             direction = new Vector2(200 * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
-            gravity = new Vector2(0, 10 * (float)gameTime.ElapsedGameTime.TotalSeconds);
+            gravity = new Vector2(0, 100 * (float)gameTime.ElapsedGameTime.TotalSeconds);
             priorKeyboardState = currentKeyboardState;
             currentKeyboardState = Keyboard.GetState();
-            if (_position.Y < 0)
+            //if (!(_offGround)) _position.Y = 300;
+            if (_position.Y < 300)
             {
-                _position += gravity;
+                _offGround = true;
             }
+            if (_position.Y >= 300)
+            {
+                _position.Y = 300;
+                _offGround = false;
+            }
+
 
 
             for(int i = 0; i < coinsCollected; i++)
@@ -116,23 +123,18 @@ namespace GameProject2
             }
 
             //Jump Function. May work on Later
-            //if(currentKeyboardState.IsKeyDown(Keys.Space))
-            //{
-            //    _position += new Vector2(0, -250 * (float)gameTime.ElapsedGameTime.TotalSeconds);
-            //    _jumpTimer += gameTime.ElapsedGameTime.TotalSeconds;
-            //    if (_jumpTimer > 1)
-            //    {
-                     
-            //        if (_position.Y > 300)
-            //        {
-            //            _position += gravity;
-            //        }
-                    
-            //        _jumpTimer = 0;
+            if(_offGround)
+            {
 
-                    
-            //    }
-            //}
+                _position += gravity;
+ 
+            }
+            if (currentKeyboardState.IsKeyDown(Keys.Space) && !(_offGround))
+            {
+                //_offGround = true;
+                _position.Y -= 100;
+                
+            }
             if (_position.X < 0) _position.X = 0;
             if (_position.X > 1150) _position.X = 1150;
 

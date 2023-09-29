@@ -1,0 +1,22 @@
+﻿﻿﻿Content/Coins.png - created by puddin of OpenGameArt.org (https://opengameart.org/content/rotating-coin) and released under the public domain
+
+
+Content/Pickup_Coin15.wav - created by Nathan Bean with BXFR, released under public domain
+
+
+Sprite_MC.png - created by Darius Tyson with Aseprite, released under public domain
+
+
+level.png - created by Darius Tyson with fire Alpaca, released under public domain
+
+
+gameproject2maintainence.png - created by Darius Tyson with fire Alpaca, released under public domain
+
+
+gameproject2titlescreen.png - created by Darius Tyson with fire Alpaca, released under public domain
+
+
+gameproject2loadingscreen.png - created by Darius Tyson with fire Alpaca, released under public domain
+
+
+Project2music.mp3 - created by Darius Tyson with LMMS, released under public domain

@@ -16,6 +16,7 @@ namespace GameProject2.Screens
 
 
         private readonly MenuEntry _controlsEntry;
+        private readonly MenuEntry _jumpEntry;
 
         public Controls() : base("Controls")
         {
@@ -23,6 +24,7 @@ namespace GameProject2.Screens
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
 
             _controlsEntry = new MenuEntry(string.Empty);
+            _jumpEntry = new MenuEntry(string.Empty);
 
             setControlsEntryText();
             var back = new MenuEntry("Back");
@@ -30,7 +32,7 @@ namespace GameProject2.Screens
             back.Selected += OnCancel;
 
             MenuEntries.Add(_controlsEntry);
-
+            MenuEntries.Add(_jumpEntry);
             MenuEntries.Add(back);
 
         }
@@ -38,7 +40,8 @@ namespace GameProject2.Screens
 
         private void setControlsEntryText()
         {
-            _controlsEntry.Text = $"A & D or the left & right arrow keys to move";
+            _controlsEntry.Text = "A & D or the left & right arrow keys to move.";
+            _jumpEntry.Text = "Press space to jump.";
         }
 
     }

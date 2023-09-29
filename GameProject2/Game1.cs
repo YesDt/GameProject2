@@ -30,7 +30,7 @@ namespace GameProject2
         {
             _screenManager.AddScreen(new BackgroundScreen(), null);
             _screenManager.AddScreen(new MainMenuScreen(), null);
-            //_screenManager.AddScreen(new SplashScreen(), null);
+            
         }
 
         protected override void Initialize()

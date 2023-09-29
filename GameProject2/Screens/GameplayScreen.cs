@@ -28,6 +28,7 @@ namespace GameProject2.Screens
 
         private Texture2D _level;
 
+        private SpriteFont _coinCounter;
         private int _coinsLeft;
 
         private Song _backgroundMusic;
@@ -73,17 +74,19 @@ namespace GameProject2.Screens
             ScreenManager.Game.ResetElapsedTime();
 
             _mc.LoadContent(_content);
+            _coinCounter = _content.Load<SpriteFont>("CoinsLeft");
             _coins = new CoinSprite[]
             {
                 new CoinSprite(new Vector2(300, 300)),
                 new CoinSprite(new Vector2(700, 300)),
                 new CoinSprite(new Vector2(5, 300)),
-                new CoinSprite(new Vector2(100, 300)),
+                new CoinSprite(new Vector2(80, 250)),
                 new CoinSprite(new Vector2(543, 300)),
                 new CoinSprite(new Vector2(723, 300)),
                 new CoinSprite(new Vector2(400, 300)),
                 new CoinSprite(new Vector2(1000, 300)),
                 new CoinSprite(new Vector2(1100, 300)),
+                new CoinSprite(new Vector2(900, 250)),
                 new CoinSprite(new Vector2(392, 300))
             };
             _coinsLeft = _coins.Length;
@@ -228,7 +231,7 @@ namespace GameProject2.Screens
             transform = Matrix.CreateTranslation(offset, 0, 0);
             spriteBatch.Begin(transformMatrix: transform);
 
-
+            
             spriteBatch.Draw(_level, new Vector2(0, 0), null, Color.White, 0f, new Vector2(0, 0), 1.5f, SpriteEffects.None, 0f);
             foreach (var coin in _coins)
             {
@@ -236,8 +239,15 @@ namespace GameProject2.Screens
 
 
             }
+            
             _mc.Draw(gameTime, spriteBatch);
 
+            spriteBatch.End();
+
+
+            spriteBatch.Begin();
+
+            spriteBatch.DrawString(_coinCounter, $"Coins Left: {_coinsLeft}", new Vector2(2, 2), Color.Gold);
             spriteBatch.End();
 
             // If the game is transitioning on or off, fade it out to black.
