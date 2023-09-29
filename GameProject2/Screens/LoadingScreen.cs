@@ -41,8 +41,10 @@ namespace GameProject2.Screens
             _screensToLoad = screensToLoad;
 
             TransitionOnTime = TimeSpan.FromSeconds(0.5);
+            //if (_content == null)
+            //    _content = new ContentManager(ScreenManager.Game.Services, "Content");
+            //_backgroundTexture = _content.Load<Texture2D>("gameproject2loadingscreen");
 
-            _backgroundTexture = _content.Load<Texture2D>("gameproject2loadingscreen");
         }
 
         // Activates the loading screen.
@@ -58,11 +60,13 @@ namespace GameProject2.Screens
 
             screenManager.AddScreen(loadingScreen, controllingPlayer);
 
+
         }
 
         public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
         {
             base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
+            
 
             // If all the previous screens have finished transitioning
             // off, it is time to actually perform the load.
@@ -104,8 +108,7 @@ namespace GameProject2.Screens
                 var spriteBatch = ScreenManager.SpriteBatch;
                 var font = ScreenManager.Font;
 
-                spriteBatch.Draw(_backgroundTexture, new Vector2(0,0),
-                new Color(TransitionAlpha, TransitionAlpha, TransitionAlpha));
+                
 
                 const string message = "Loading...";
 
@@ -119,7 +122,9 @@ namespace GameProject2.Screens
 
                 // Draw the text.
                 spriteBatch.Begin();
-                spriteBatch.DrawString(font, message, textPosition, color);
+                //spriteBatch.Draw(_backgroundTexture, new Vector2(0, 0),
+                //new Color(TransitionAlpha, TransitionAlpha, TransitionAlpha));
+                //spriteBatch.DrawString(font, message, textPosition, color);
                 spriteBatch.End();
             }
         }
