@@ -10,7 +10,8 @@ namespace GameProject2.Screens
     // The main menu screen is the first thing displayed when the game starts up.
     public class MainMenuScreen : MenuScreen
     {
-        public MainMenuScreen() : base("Main Menu")
+
+        public MainMenuScreen() : base("Gold Rush")
         {
             var playGameMenuEntry = new MenuEntry("Play Game");
             var controlsEntry = new MenuEntry("Controls");

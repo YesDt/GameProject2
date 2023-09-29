@@ -78,7 +78,7 @@ namespace GameProject2
         public void Update(GameTime gameTime)
         {
             direction = new Vector2(200 * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
-            gravity = new Vector2(0, 100 * (float)gameTime.ElapsedGameTime.TotalSeconds);
+            gravity = new Vector2(0, 200 * (float)gameTime.ElapsedGameTime.TotalSeconds);
             priorKeyboardState = currentKeyboardState;
             currentKeyboardState = Keyboard.GetState();
             //if (!(_offGround)) _position.Y = 300;

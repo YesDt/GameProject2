@@ -39,6 +39,9 @@ namespace GameProject2.StateManagement
         /// </summary>
         public Texture2D BlankTexture { get; private set; }
 
+
+        public ContentManager Content => _content;
+
         /// <summary>
         /// Constructs a new ScreenManager
         /// </summary>
